@@ -25,6 +25,9 @@ export class TcpServerService implements OnApplicationBootstrap, OnModuleDestroy
 
   onApplicationBootstrap(): void {
     const server = net.createServer((socket) => {
+      socket.setNoDelay(true);
+      socket.setKeepAlive(true, 30_000);
+
       const peer = `${socket.remoteAddress}:${socket.remotePort}`;
       this.logger.log(`[TCP] client connected ${peer}`);
 
@@ -36,7 +39,8 @@ export class TcpServerService implements OnApplicationBootstrap, OnModuleDestroy
 
           switch (cmd) {
             case RfidCommand.REGISTER: {
-              const ack = this.rfid.buildRegisterAck(chunk, this.config.host, this.config.port);
+              const reportedIp = this.config.publicIp || socket.localAddress || this.config.host;
+              const ack = this.rfid.buildRegisterAck(chunk, reportedIp, this.config.port);
               this.writeIfBuffer(socket, ack);
               break;
             }
