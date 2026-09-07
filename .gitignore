@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+
+# Vendor DLL (binary, not tracked)
+*.dll
+*.lib
+*.exp
+Release/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Build artifacts
+dist/
+build/
+deploy/
+
+
+antenasctac-vm_key.pem
+DEPLOY-AZURE.md
+antenas_ctac.zip
